@@ -103,4 +103,5 @@ If you want to retrain the model or see the analysis:
 
 ## Screenshots
 <img width="604" height="823" alt="Image" src="https://github.com/user-attachments/assets/55bb5fb2-4766-4c8b-aaae-174b7c4311b9" />
+
 <img width="600" height="820" alt="Image" src="https://github.com/user-attachments/assets/e36828c1-161b-4986-ac34-162916ca19f1" />
