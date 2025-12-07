@@ -28,12 +28,34 @@ Columns: 9
 
 Target: Outcome (0 = Non-Diabetic, 1 = Diabetic)
 
-Feature	Description
-Pregnancies	Number of times pregnant
-Glucose	Plasma glucose concentration a 2 hours in an oral glucose tolerance test
-BloodPressure	Diastolic blood pressure (mm Hg)
-SkinThickness	Triceps skin fold thickness (mm)
-Insulin	2-Hour serum insulin (mu U/ml)
-BMI	Body mass index (weight in kg/(height in m)^2)
-DiabetesPedigreeFunction	A function scoring likelihood of diabetes based on family history
-Age	Age (years)
+| Feature                   | Description                                                                                 |
+|---------------------------|---------------------------------------------------------------------------------------------|
+| Pregnancies               | Number of times pregnant                                                                   |
+| Glucose                   | Plasma glucose concentration 2 hours into an oral glucose tolerance test                  |
+| BloodPressure             | Diastolic blood pressure (mm Hg)                                                           |
+| SkinThickness             | Triceps skin fold thickness (mm)                                                           |
+| Insulin                   | 2-hour serum insulin (mu U/ml)                                                             |
+| BMI                       | Body mass index (weight in kg/(height in m)^2)                                            |
+| DiabetesPedigreeFunction  | Function scoring likelihood of diabetes based on family history                           |
+| Age                       | Age (years)                                                                               |
+
+## Methodology
+1. **Data Cleaning & Preprocessing**
+   
+A major challenge with this dataset is the presence of invalid "0" values in biological columns (Glucose, Blood Pressure, Skin Thickness, Insulin, BMI).
+
+    * **Problem**: Biological stats cannot be zero. These represented missing data.
+
+    * **Solution** (Group-Aware Imputation): Instead of using a global mean/median, missing values were filled using the median of the specific Outcome group.
+
+        * **Example**: Missing Insulin for a diabetic patient was filled with the median Insulin of other diabetic patients (~169.5), rather than the healthy median (~102.5).
+
+2. **Outlier Removal**
+   
+Statistical outliers were handled using the IQR (Interquartile Range) Method and domain knowledge:
+
+    * **SkinThickness**: Removed records < 14.5 (for Diabetics) and > 42.5 (for Non-Diabetics) to reduce noise.
+    
+    * **Extreme Values**: Removed physically impossible outliers (e.g., SkinThickness = 99).
+    
+    * **Pregnancies**: High pregnancy counts (e.g., 14-17) were kept as they were found to be valid high-risk indicators for diabetes in this specific dataset.
